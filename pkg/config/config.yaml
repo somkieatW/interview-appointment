@@ -1,0 +1,12 @@
+mysql:
+  host: "127.0.0.1"
+  port: 3306
+  database: recruitment
+  timeout: 10s
+  max:
+    idleconns: 100
+    openconns: 100
+    lifetime: 30m
+secret:
+  mysqlUsername: "root"
+  mysqlPassword: "password"

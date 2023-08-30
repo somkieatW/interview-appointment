@@ -1,0 +1,35 @@
+cd gen/code
+gen \
+     --sqltype=mysql \
+     --connstr='root:password@tcp(127.0.0.1:3306)/recruitment?parseTime=true' \
+     --database=recruitment \
+     --templateDir=../templates \
+     --model=domain \
+     --dao=dao \
+     --api=api \
+     --out=./ \
+     --module=recruitment \
+     --json \
+     --json-fmt=lower_camel \
+     --gorm \
+     --guregu \
+     --makefile \
+     --server \
+     --overwrite \
+     --host=localhost \
+     --port=8080 \
+     --listen=:8080 \
+     --scheme=http \
+     --generate-dao \
+     --generate-proj \
+     --file_naming='{{.}}' \
+     --model_naming='{{FmtFieldName .}}' \
+     --swagger_version=1.0 \
+     --swagger_path=/ \
+     --swagger_tos= \
+     --swagger_contact_name=Me \
+     --swagger_contact_url=http://me.com/terms.html \
+     --swagger_contact_email=me@me.com \
+     --templateDir=../templates
+
+cd ../..

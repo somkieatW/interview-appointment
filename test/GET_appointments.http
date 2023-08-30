@@ -1,1 +1,1 @@
-GET http://localhost:8080//appointment/list
+GET http://localhost:3001/appointment/list?offset=0&pageSize=10

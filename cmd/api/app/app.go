@@ -1,13 +1,15 @@
 package app
 
 import (
-	"github.com/gin-gonic/gin"
+	"fmt"
+	"github.com/gofiber/fiber/v2"
 	"github.com/somkieatW/candidate/cmd/api/handler"
 	"github.com/somkieatW/candidate/pkg/config"
 	"github.com/somkieatW/candidate/pkg/core/db"
 	"github.com/somkieatW/candidate/pkg/core/registry"
 	"github.com/somkieatW/candidate/pkg/core/registry/core"
 	candidate "github.com/somkieatW/candidate/pkg/modules/appointment/usecase"
+	user "github.com/somkieatW/candidate/pkg/modules/user/usecase"
 	"github.com/somkieatW/candidate/pkg/repository"
 	"log"
 )
@@ -28,6 +30,7 @@ func Run() {
 
 	repositoryRegistry := &registry.RepositoryRegistry{
 		AppointmentRepository: repository.NewAppointmentRepository(mysqlDb.Client),
+		UserRepository:        repository.NewUserRepository(mysqlDb.Client),
 	}
 
 	coreRegistry := &core.CoreRegistry{
@@ -35,16 +38,22 @@ func Run() {
 	}
 
 	candidateUseCase := candidate.NewAppointmentUseCase(coreRegistry, repositoryRegistry)
+	_ = user.NewUserUseCase(coreRegistry, repositoryRegistry)
 
-	r := gin.Default()
+	r := fiber.New()
 	router := r.Group("")
 
 	handler.NewAppointmentAPIHandler(router, coreRegistry, candidateUseCase).Init()
 
-	err = r.Run(":8080")
-	if err != nil {
-		log.Panicf("run api server err : %v", err)
-	}
+	r.Get("/health-check", func(c *fiber.Ctx) error {
+		return c.JSON(c.App().Stack())
+	})
 
+	port := "3001"
+	err = r.Listen(fmt.Sprintf(":%s", port))
+	if err != nil {
+		log.Panic(err)
+		return
+	}
 	var ()
 }

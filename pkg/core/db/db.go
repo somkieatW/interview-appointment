@@ -6,6 +6,7 @@ import (
 	"github.com/somkieatW/candidate/pkg/config"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 type mySqlDB struct {
@@ -26,7 +27,9 @@ func NewMySqlDB(cfg config.Mysql, secrets config.Secret) (*mySqlDB, error) {
 	)
 	//log.Infof(context.Background(), "[CONFIG] [MYSQL] address: %s", addr)
 
-	db, err := gorm.Open(mysql.Open(dsn))
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Info),
+	})
 	if err != nil {
 		return nil, errors.Wrap(err, "gorm open")
 	}

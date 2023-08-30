@@ -1,37 +1,46 @@
 package handler
 
 import (
-	"github.com/gin-gonic/gin"
+	"github.com/gofiber/fiber/v2"
 	"github.com/somkieatW/candidate/pkg/core/registry/core"
 	"github.com/somkieatW/candidate/pkg/modules/appointment"
 	"github.com/somkieatW/candidate/pkg/modules/appointment/models"
-	"net/http"
+	"strconv"
 )
 
 type AppointmentAPIHandler struct {
-	router             gin.IRouter
+	router             fiber.Router
 	CoreRegistry       *core.CoreRegistry
-	AppointmentUseCase appointment.AppointmentUseCase
+	appointmentUseCase appointment.AppointmentUseCase
 }
 
-func NewAppointmentAPIHandler(router gin.IRouter, coreRegistry *core.CoreRegistry, candidate appointment.AppointmentUseCase) *AppointmentAPIHandler {
+func NewAppointmentAPIHandler(router fiber.Router, coreRegistry *core.CoreRegistry, appointmentUseCase appointment.AppointmentUseCase) *AppointmentAPIHandler {
 	return &AppointmentAPIHandler{
-		router:       router,
-		CoreRegistry: coreRegistry,
+		router:             router,
+		CoreRegistry:       coreRegistry,
+		appointmentUseCase: appointmentUseCase,
 	}
 }
 
 func (h *AppointmentAPIHandler) Init() {
 	router := h.router
 
-	router.GET("/appointment/list", h.AppointmentList)
+	router.Get("/appointment/list", h.AppointmentList)
 }
 
-func (h *AppointmentAPIHandler) AppointmentList(c *gin.Context) {
-	request := &models.AppointmentListRequest{}
-	if err := c.Bind(request); err != nil {
-		return
+//http://localhost:3001/appointment/list?offset=1&pageSize=10
+
+func (h *AppointmentAPIHandler) AppointmentList(c *fiber.Ctx) error {
+	pageSize, err := strconv.Atoi(c.Query("pageSize"))
+	offset, err := strconv.Atoi(c.Query("offset"))
+	request := &models.AppointmentListRequest{PageSize: pageSize, Offset: offset}
+
+	ctx := c.UserContext()
+	data, err := h.appointmentUseCase.List(ctx, request)
+	if err != nil {
+		return err
 	}
 
-	c.String(http.StatusOK, "User Info: %v", nil)
+	c.Status(200).JSON(data)
+	return nil
 }

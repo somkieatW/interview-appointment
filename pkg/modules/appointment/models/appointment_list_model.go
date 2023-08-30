@@ -2,11 +2,11 @@ package models
 
 import (
 	"github.com/somkieatW/candidate/pkg/domain"
-	"github.com/somkieatW/candidate/pkg/repository/repomodels"
 )
 
 type AppointmentListRequest struct {
-	*repomodels.AppointmentListCriteria
+	Offset   int `json:"offset"  example:"1"`
+	PageSize int `json:"pageSize" example:"10"`
 }
 
 type AppointmentListResponse struct {

@@ -6,13 +6,13 @@ import (
 	"github.com/somkieatW/candidate/pkg/modules/appointment"
 )
 
-type candidateUseCase struct {
+type appointmentUseCase struct {
 	CoreRegistry       *core.CoreRegistry
 	RepositoryRegistry *registry.RepositoryRegistry
 }
 
 func NewAppointmentUseCase(coreRegistry *core.CoreRegistry, repositoryRegistry *registry.RepositoryRegistry) appointment.AppointmentUseCase {
-	return &candidateUseCase{
+	return &appointmentUseCase{
 		CoreRegistry:       coreRegistry,
 		RepositoryRegistry: repositoryRegistry,
 	}

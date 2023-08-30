@@ -4,13 +4,13 @@ import (
 	"context"
 	"database/sql"
 	"github.com/somkieatW/candidate/pkg/domain"
-	"github.com/somkieatW/candidate/pkg/repository/repomodels"
-
+	"github.com/somkieatW/candidate/pkg/modules/appointment/models"
 	"gorm.io/gorm"
 )
 
 type AppointmentRepository interface {
-	List(ctx context.Context, obj *repomodels.AppointmentListCriteria) (*[]domain.Appointment, error)
+	List(ctx context.Context, obj *models.AppointmentListRequest) (*[]domain.Appointment, error)
+	Info(ctx context.Context, obj *models.AppointmentInfoRequest) (*domain.Appointment, error)
 }
 
 type appointmentRepository struct {
@@ -21,15 +21,27 @@ func NewAppointmentRepository(db *gorm.DB) AppointmentRepository {
 	return &appointmentRepository{db}
 }
 
-func (r *appointmentRepository) List(ctx context.Context, obj *repomodels.AppointmentListCriteria) (*[]domain.Appointment, error) {
+func (r *appointmentRepository) List(ctx context.Context, obj *models.AppointmentListRequest) (*[]domain.Appointment, error) {
 	appointment := &[]domain.Appointment{}
 
 	db := r.db.WithContext(ctx)
 	db = db.Model(appointment)
 
-	db.Limit(obj.Limit.PageSize).Offset(obj.Limit.Offset)
+	db.Limit(obj.PageSize).Offset(obj.Offset)
 
 	db = db.Find(&appointment)
+	if err := db.Error; err != nil {
+		return nil, DbError(err)
+	}
+	return appointment, nil
+}
+
+func (r *appointmentRepository) Info(ctx context.Context, obj *models.AppointmentInfoRequest) (*domain.Appointment, error) {
+	appointment := &domain.Appointment{}
+	db := r.db.WithContext(ctx)
+	db = db.Model(appointment)
+	db = db.First(&appointment)
+
 	if err := db.Error; err != nil {
 		return nil, DbError(err)
 	}

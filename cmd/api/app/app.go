@@ -9,6 +9,7 @@ import (
 	"github.com/somkieatW/candidate/pkg/core/registry"
 	"github.com/somkieatW/candidate/pkg/core/registry/core"
 	candidate "github.com/somkieatW/candidate/pkg/modules/appointment/usecase"
+	comment "github.com/somkieatW/candidate/pkg/modules/comment/usecase"
 	user "github.com/somkieatW/candidate/pkg/modules/user/usecase"
 	"github.com/somkieatW/candidate/pkg/repository"
 	"log"
@@ -31,6 +32,7 @@ func Run() {
 	repositoryRegistry := &registry.RepositoryRegistry{
 		AppointmentRepository: repository.NewAppointmentRepository(mysqlDb.Client),
 		UserRepository:        repository.NewUserRepository(mysqlDb.Client),
+		CommentRepository:     repository.NewCommentRepository(mysqlDb.Client),
 	}
 
 	coreRegistry := &core.CoreRegistry{
@@ -39,6 +41,7 @@ func Run() {
 
 	candidateUseCase := candidate.NewAppointmentUseCase(coreRegistry, repositoryRegistry)
 	_ = user.NewUserUseCase(coreRegistry, repositoryRegistry)
+	_ = comment.NewCommentUseCase(coreRegistry, repositoryRegistry)
 
 	r := fiber.New()
 	router := r.Group("")

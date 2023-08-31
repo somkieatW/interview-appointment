@@ -3,12 +3,15 @@ package repository
 import (
 	"context"
 	"database/sql"
+	"github.com/somkieatW/candidate/pkg/core/utils"
 	"github.com/somkieatW/candidate/pkg/domain"
 	"github.com/somkieatW/candidate/pkg/modules/appointment/models"
 	"gorm.io/gorm"
 )
 
 type AppointmentRepository interface {
+	IsExisted(ctx context.Context, id string) bool
+	IsNotExisted(ctx context.Context, id string) bool
 	List(ctx context.Context, obj *models.AppointmentListRequest) (*[]domain.Appointment, error)
 	Info(ctx context.Context, obj *models.AppointmentInfoRequest) (*domain.Appointment, error)
 }
@@ -19,6 +22,22 @@ type appointmentRepository struct {
 
 func NewAppointmentRepository(db *gorm.DB) AppointmentRepository {
 	return &appointmentRepository{db}
+}
+
+func (r *appointmentRepository) IsExisted(ctx context.Context, id string) bool {
+	appointment := &domain.Appointment{}
+	db := r.db.WithContext(ctx)
+	db = db.First(&domain.Appointment{}, id)
+
+	if utils.IsEmpty(appointment.ID) {
+		return false
+	}
+
+	return true
+}
+
+func (r *appointmentRepository) IsNotExisted(ctx context.Context, id string) bool {
+	return !r.IsExisted(ctx, id)
 }
 
 func (r *appointmentRepository) List(ctx context.Context, obj *models.AppointmentListRequest) (*[]domain.Appointment, error) {
@@ -39,7 +58,7 @@ func (r *appointmentRepository) List(ctx context.Context, obj *models.Appointmen
 func (r *appointmentRepository) Info(ctx context.Context, obj *models.AppointmentInfoRequest) (*domain.Appointment, error) {
 	appointment := &domain.Appointment{}
 	db := r.db.WithContext(ctx)
-	db = db.Model(appointment)
+	db = db.Model(obj)
 	db = db.First(&appointment)
 
 	if err := db.Error; err != nil {

@@ -9,4 +9,5 @@ mysql:
     lifetime: 30m
 secret:
   mysqlUsername: "root"
-  mysqlPassword: "password"
+  mysqlPassword: "1234"
+#  mysqlPassword: "password"

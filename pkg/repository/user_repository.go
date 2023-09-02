@@ -4,14 +4,12 @@ import (
 	"context"
 	"github.com/somkieatW/interview-appointment/pkg/core/utils"
 	"github.com/somkieatW/interview-appointment/pkg/domain"
-	"github.com/somkieatW/interview-appointment/pkg/models"
 	"gorm.io/gorm"
 )
 
 type UserRepository interface {
 	IsExisted(ctx context.Context, id string) bool
 	IsNotExisted(ctx context.Context, id string) bool
-	Info(ctx context.Context, obj *models.UserInfoRequest) (*domain.User, error)
 }
 
 type userRepository struct {
@@ -37,15 +35,4 @@ func (r *userRepository) IsExisted(ctx context.Context, id string) bool {
 
 func (r *userRepository) IsNotExisted(ctx context.Context, id string) bool {
 	return !r.IsExisted(ctx, id)
-}
-
-func (r *userRepository) Info(ctx context.Context, obj *models.UserInfoRequest) (*domain.User, error) {
-	user := &domain.User{}
-	db := r.db.WithContext(ctx)
-	db = db.First(&obj)
-
-	if err := db.Error; err != nil {
-		return nil, utils.DbError(err)
-	}
-	return user, nil
 }

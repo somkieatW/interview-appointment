@@ -2,7 +2,7 @@ package appointment
 
 import (
 	"context"
-	"github.com/somkieatW/candidate/pkg/modules/appointment/models"
+	"github.com/somkieatW/interview-appointment/pkg/modules/appointment/models"
 )
 
 type AppointmentUseCase interface {

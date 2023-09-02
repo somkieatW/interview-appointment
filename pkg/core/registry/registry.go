@@ -1,6 +1,6 @@
 package registry
 
-import "github.com/somkieatW/candidate/pkg/repository"
+import "github.com/somkieatW/interview-appointment/pkg/repository"
 
 type RepositoryRegistry struct {
 	AppointmentRepository repository.AppointmentRepository

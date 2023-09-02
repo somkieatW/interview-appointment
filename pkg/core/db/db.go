@@ -3,7 +3,7 @@ package db
 import (
 	"fmt"
 	"github.com/pkg/errors"
-	"github.com/somkieatW/candidate/pkg/config"
+	"github.com/somkieatW/interview-appointment/pkg/config"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"

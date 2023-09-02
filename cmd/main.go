@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/somkieatW/candidate/cmd/api/app"
+	"github.com/somkieatW/interview-appointment/cmd/api/app"
 )
 
 func main() {

@@ -2,7 +2,7 @@ package user
 
 import (
 	"context"
-	"github.com/somkieatW/candidate/pkg/modules/user/models"
+	"github.com/somkieatW/interview-appointment/pkg/modules/user/models"
 )
 
 type UserUseCase interface {

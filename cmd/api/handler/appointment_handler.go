@@ -2,9 +2,9 @@ package handler
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/somkieatW/candidate/pkg/core/registry/core"
-	"github.com/somkieatW/candidate/pkg/modules/appointment"
-	"github.com/somkieatW/candidate/pkg/modules/appointment/models"
+	"github.com/somkieatW/interview-appointment/pkg/core/registry/core"
+	"github.com/somkieatW/interview-appointment/pkg/modules/appointment"
+	"github.com/somkieatW/interview-appointment/pkg/modules/appointment/models"
 	"strconv"
 )
 

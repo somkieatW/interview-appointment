@@ -1,9 +1,9 @@
 package usecase
 
 import (
-	"github.com/somkieatW/candidate/pkg/core/registry"
-	"github.com/somkieatW/candidate/pkg/core/registry/core"
-	"github.com/somkieatW/candidate/pkg/modules/comment"
+	"github.com/somkieatW/interview-appointment/pkg/core/registry"
+	"github.com/somkieatW/interview-appointment/pkg/core/registry/core"
+	"github.com/somkieatW/interview-appointment/pkg/modules/comment"
 )
 
 type commentUseCase struct {

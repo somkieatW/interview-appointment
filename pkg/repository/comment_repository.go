@@ -2,8 +2,8 @@ package repository
 
 import (
 	"context"
-	"github.com/somkieatW/candidate/pkg/core/utils"
-	"github.com/somkieatW/candidate/pkg/domain"
+	"github.com/somkieatW/interview-appointment/pkg/core/utils"
+	"github.com/somkieatW/interview-appointment/pkg/domain"
 	"gorm.io/gorm"
 )
 

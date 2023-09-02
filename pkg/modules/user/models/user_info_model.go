@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/somkieatW/candidate/pkg/domain"
+	"github.com/somkieatW/interview-appointment/pkg/domain"
 )
 
 type UserInfoRequest struct {

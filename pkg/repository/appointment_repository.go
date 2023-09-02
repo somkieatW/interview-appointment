@@ -2,9 +2,9 @@ package repository
 
 import (
 	"context"
-	"github.com/somkieatW/candidate/pkg/core/utils"
-	"github.com/somkieatW/candidate/pkg/domain"
-	"github.com/somkieatW/candidate/pkg/modules/appointment/models"
+	"github.com/somkieatW/interview-appointment/pkg/core/utils"
+	"github.com/somkieatW/interview-appointment/pkg/domain"
+	"github.com/somkieatW/interview-appointment/pkg/modules/appointment/models"
 	"gorm.io/gorm"
 )
 

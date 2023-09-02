@@ -6,8 +6,8 @@ import (
 	"github.com/go-ozzo/ozzo-validation/v4/is"
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
-	"github.com/somkieatW/candidate/pkg/domain"
-	"github.com/somkieatW/candidate/pkg/modules/comment/models"
+	"github.com/somkieatW/interview-appointment/pkg/domain"
+	"github.com/somkieatW/interview-appointment/pkg/modules/comment/models"
 	"time"
 )
 

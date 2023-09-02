@@ -1,4 +1,4 @@
-module github.com/somkieatW/candidate
+module github.com/somkieatW/interview-appointment
 
 go 1.20
 

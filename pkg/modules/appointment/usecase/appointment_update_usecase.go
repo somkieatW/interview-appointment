@@ -4,9 +4,9 @@ import (
 	"context"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
 	"github.com/go-ozzo/ozzo-validation/v4/is"
-	"github.com/somkieatW/candidate/pkg/core/constants"
-	"github.com/somkieatW/candidate/pkg/domain"
-	"github.com/somkieatW/candidate/pkg/modules/appointment/models"
+	"github.com/somkieatW/interview-appointment/pkg/core/constants"
+	"github.com/somkieatW/interview-appointment/pkg/domain"
+	"github.com/somkieatW/interview-appointment/pkg/modules/appointment/models"
 	"time"
 )
 

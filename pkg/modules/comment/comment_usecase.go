@@ -2,7 +2,7 @@ package comment
 
 import (
 	"context"
-	"github.com/somkieatW/candidate/pkg/modules/comment/models"
+	"github.com/somkieatW/interview-appointment/pkg/modules/comment/models"
 )
 
 type CommentUseCase interface {

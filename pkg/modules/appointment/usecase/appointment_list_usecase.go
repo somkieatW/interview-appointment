@@ -3,7 +3,7 @@ package usecase
 import (
 	"context"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
-	"github.com/somkieatW/interview-appointment/pkg/modules/appointment/models"
+	"github.com/somkieatW/interview-appointment/pkg/models"
 )
 
 func listValidate(request *models.AppointmentListRequest) error {

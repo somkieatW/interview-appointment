@@ -26,18 +26,13 @@ CREATE TABLE `user` (
   `profile_image_url` varchar(255) DEFAULT NULL,
   `status` varchar(1) NOT NULL,
   `created_by` varchar(45) NOT NULL,
-  `created_date` timestamp NOT NULL
+  `created_date` timestamp NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
 JSON Sample
 -------------------------------------
-{    "id": "FNyHfHAPstKSoATienUrRDDEf",    "displayName": "XpegFyVNQUpqIBElZCNfiAPDw",    "profileImageUrl": "dewuuNLELLBHxlePMIDTbNTCA",    "status": "aOYTMIkeUfEjpgOFJAqhJxQqI",    "createdBy": "NRcUBbUTDUkXJUqLkYWVcnmby",    "createdDate": "2154-09-30T03:24:04.473663139+07:00"}
-
-
-Comments
--------------------------------------
-[ 0] Warning table: user does not have a primary key defined, setting col position 1 id as primary key
-
+{    "id": "CoptVBNPRgyLhbHQnJljoiDIQ",    "displayName": "aGTXLgKOgPfhMiTHoTbyNYINF",    "profileImageUrl": "kfIdZAWndhCTRYNtbLtbkJUYC",    "status": "YyhlWnpfyUsOhkuTuSgqtHswo",    "createdBy": "BZOygxJptWeRuVGfUeegVVSVU",    "createdDate": "2071-07-31T01:45:54.891419208+07:00"}
 
 
 
@@ -50,7 +45,7 @@ type User struct {
 	//[ 1] display_name                                   varchar(255)         null: false  primary: false  isArray: false  auto: false  col: varchar         len: 255     default: []
 	DisplayName string `gorm:"column:display_name;type:varchar;size:255;" json:"displayName"`
 	//[ 2] profile_image_url                              varchar(255)         null: true   primary: false  isArray: false  auto: false  col: varchar         len: 255     default: []
-	ProfileImageURL null.String `gorm:"column:profile_image_url;type:varchar;size:255;" json:"profileImageUrl" swaggertype:"string"`
+	ProfileImageURL null.String `gorm:"column:profile_image_url;type:varchar;size:255;" json:"profileImageUrl"`
 	//[ 3] status                                         varchar(1)           null: false  primary: false  isArray: false  auto: false  col: varchar         len: 1       default: []
 	Status string `gorm:"column:status;type:varchar;size:1;" json:"status"`
 	//[ 4] created_by                                     varchar(45)          null: false  primary: false  isArray: false  auto: false  col: varchar         len: 45      default: []

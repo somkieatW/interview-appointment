@@ -4,7 +4,7 @@ import (
 	"context"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
 	"github.com/go-ozzo/ozzo-validation/v4/is"
-	"github.com/somkieatW/interview-appointment/pkg/modules/appointment/models"
+	"github.com/somkieatW/interview-appointment/pkg/models"
 )
 
 func infoValidate(request *models.AppointmentInfoRequest) error {

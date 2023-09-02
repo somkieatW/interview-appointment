@@ -27,18 +27,17 @@ CREATE TABLE `appointment` (
   `description` text,
   `status` varchar(1) NOT NULL,
   `created_by` varchar(45) NOT NULL,
-  `created_date` timestamp NOT NULL
+  `created_at` timestamp NOT NULL,
+  `updated_by` varchar(45) NOT NULL,
+  `updated_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `appointment_FK` (`created_by`),
+  KEY `appointment_FK_1` (`updated_by`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
 JSON Sample
 -------------------------------------
-{    "id": "epCOAEImeIaXyRiakhfbZDhUQ",    "topic": "DMieurJErhZLaiFgosOpaHtLS",    "state": "iEJHPLBbmZvBeUDFLSeepAhhF",    "description": "TThimpYxrwWFAumBXpEZRimWv",    "status": "vfyKkERhywaaCwIcwfyQOHpBS",    "createdBy": "tjVdhygLuMmaMZULjPYGpQnwe",    "createdDate": "2177-06-25T23:37:40.977525944+07:00"}
-
-
-Comments
--------------------------------------
-[ 0] Warning table: appointment does not have a primary key defined, setting col position 1 id as primary key
-
+{    "id": "doTEABUpRhFSSgRRMKjabiTyZ",    "topic": "eKuXZWdZOvQQlmAndlREUojnp",    "state": "AUxUQUfBelceVefhDljVDraZm",    "description": "rFyuLOSWnLdWekBAjlSSLRWGZ",    "status": "mAMvBOCLZyhSaLqxFmiXqXykE",    "createdBy": "APVeAEwutamndSuSZbWbmFVNh",    "createdAt": "2143-08-27T05:02:07.35775473+07:00",    "updatedBy": "JapyUIFmtaLlgNlUpnkVyoTgA",    "updatedAt": "2286-09-30T10:10:37.272335239+07:00"}
 
 
 
@@ -53,14 +52,16 @@ type Appointment struct {
 	//[ 2] state                                          varchar(20)          null: false  primary: false  isArray: false  auto: false  col: varchar         len: 20      default: []
 	State string `gorm:"column:state;type:varchar;size:20;" json:"state"`
 	//[ 3] description                                    text(65535)          null: true   primary: false  isArray: false  auto: false  col: text            len: 65535   default: []
-	Description null.String `gorm:"column:description;type:text;size:65535;" json:"description" swaggertype:"string"`
+	Description null.String `gorm:"column:description;type:text;size:65535;" json:"description"`
 	//[ 4] status                                         varchar(1)           null: false  primary: false  isArray: false  auto: false  col: varchar         len: 1       default: []
 	Status string `gorm:"column:status;type:varchar;size:1;" json:"status"`
 	//[ 5] created_by                                     varchar(45)          null: false  primary: false  isArray: false  auto: false  col: varchar         len: 45      default: []
 	CreatedBy string `gorm:"column:created_by;type:varchar;size:45;" json:"createdBy"`
-	//[ 6] created_date                                   timestamp            null: false  primary: false  isArray: false  auto: false  col: timestamp       len: -1      default: []
+	//[ 6] created_at                                     timestamp            null: false  primary: false  isArray: false  auto: false  col: timestamp       len: -1      default: []
 	CreatedAt time.Time `gorm:"column:created_at;type:timestamp;" json:"createdAt"`
-	UpdatedBy string    `gorm:"column:updated_by;type:varchar;size:45;" json:"updatedBy"`
+	//[ 7] updated_by                                     varchar(45)          null: false  primary: false  isArray: false  auto: false  col: varchar         len: 45      default: []
+	UpdatedBy string `gorm:"column:updated_by;type:varchar;size:45;" json:"updatedBy"`
+	//[ 8] updated_at                                     timestamp            null: false  primary: false  isArray: false  auto: false  col: timestamp       len: -1      default: []
 	UpdatedAt time.Time `gorm:"column:updated_at;type:timestamp;" json:"updatedAt"`
 }
 

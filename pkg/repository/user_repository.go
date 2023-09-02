@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/somkieatW/interview-appointment/pkg/core/utils"
 	"github.com/somkieatW/interview-appointment/pkg/domain"
-	"github.com/somkieatW/interview-appointment/pkg/modules/user/models"
+	"github.com/somkieatW/interview-appointment/pkg/models"
 	"gorm.io/gorm"
 )
 
@@ -25,7 +25,8 @@ func NewUserRepository(db *gorm.DB) UserRepository {
 func (r *userRepository) IsExisted(ctx context.Context, id string) bool {
 	user := &domain.User{}
 	db := r.db.WithContext(ctx)
-	db = db.First(&domain.User{}, id)
+
+	db.First(user, "id = ?", id)
 
 	if utils.IsEmpty(user.ID) {
 		return false

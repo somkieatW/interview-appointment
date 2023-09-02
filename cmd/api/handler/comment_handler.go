@@ -3,8 +3,8 @@ package handler
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/somkieatW/interview-appointment/pkg/core/registry/core"
+	"github.com/somkieatW/interview-appointment/pkg/models"
 	"github.com/somkieatW/interview-appointment/pkg/modules/comment"
-	"github.com/somkieatW/interview-appointment/pkg/modules/comment/models"
 )
 
 type CommentAPIHandler struct {

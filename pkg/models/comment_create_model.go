@@ -1,9 +1,5 @@
 package models
 
-import (
-	"github.com/somkieatW/interview-appointment/pkg/domain"
-)
-
 type CommentCreateRequest struct {
 	AppointmentID string `json:"appointmentId"`
 	UserID        string `json:"userId"`
@@ -11,9 +7,5 @@ type CommentCreateRequest struct {
 }
 
 type CommentCreateResponse struct {
-	Data    *domain.Comment `json:"data"`
-	Success bool            `json:"success"`
-}
-
-type CommentInfoData struct {
+	Success bool `json:"success"`
 }

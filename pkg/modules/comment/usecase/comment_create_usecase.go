@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
 	"github.com/somkieatW/interview-appointment/pkg/domain"
-	"github.com/somkieatW/interview-appointment/pkg/modules/comment/models"
+	"github.com/somkieatW/interview-appointment/pkg/models"
 	"time"
 )
 
@@ -30,30 +30,29 @@ func (u *commentUseCase) Create(ctx context.Context, request *models.CommentCrea
 		return nil, err
 	}
 
-	if u.RepositoryRegistry.UserRepository.IsNotExisted(ctx, request.UserID) {
-		return nil, errors.New("This User is Not existed")
-	}
-
 	if u.RepositoryRegistry.AppointmentRepository.IsNotExisted(ctx, request.AppointmentID) {
 		return nil, errors.New("This Appointment is not existed")
 	}
 
-	obj := &domain.Comment{
+	if u.RepositoryRegistry.UserRepository.IsNotExisted(ctx, request.UserID) {
+		return nil, errors.New("This User is Not existed")
+	}
+
+	obj := &domain.Comments{
 		ID:            uuid.NewString(),
 		AppointmentID: request.AppointmentID,
 		UserID:        request.UserID,
 		Content:       request.Content,
-		CreatedDate:   time.Now(),
+		CreatedAt:     time.Now(),
 	}
 
-	data, err := u.RepositoryRegistry.CommentRepository.Create(ctx, obj)
+	err := u.RepositoryRegistry.CommentRepository.Create(ctx, obj)
 	if err != nil {
 		return nil, err
 	}
 
 	res := &models.CommentCreateResponse{
 		Success: true,
-		Data:    data,
 	}
 
 	return res, nil

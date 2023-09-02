@@ -4,15 +4,16 @@ import (
 	"context"
 	"github.com/somkieatW/interview-appointment/pkg/core/utils"
 	"github.com/somkieatW/interview-appointment/pkg/domain"
-	"github.com/somkieatW/interview-appointment/pkg/modules/appointment/models"
+	"github.com/somkieatW/interview-appointment/pkg/models"
+	models2 "github.com/somkieatW/interview-appointment/pkg/models"
 	"gorm.io/gorm"
 )
 
 type AppointmentRepository interface {
 	IsExisted(ctx context.Context, id string) bool
 	IsNotExisted(ctx context.Context, id string) bool
-	List(ctx context.Context, obj *models.AppointmentListRequest) (*[]models.AppointmentListData, error)
-	Info(ctx context.Context, obj *models.AppointmentInfoRequest) (*models.AppointmentInfoData, error)
+	List(ctx context.Context, obj *models2.AppointmentListRequest) (*[]models2.AppointmentListData, error)
+	Info(ctx context.Context, obj *models2.AppointmentInfoRequest) (*models2.AppointmentInfoData, error)
 	Update(ctx context.Context, obj *domain.Appointment) error
 }
 
@@ -27,7 +28,8 @@ func NewAppointmentRepository(db *gorm.DB) AppointmentRepository {
 func (r *appointmentRepository) IsExisted(ctx context.Context, id string) bool {
 	appointment := &domain.Appointment{}
 	db := r.db.WithContext(ctx)
-	db = db.First(&domain.Appointment{}, id)
+
+	db.First(appointment, "id = ?", id)
 
 	if utils.IsEmpty(appointment.ID) {
 		return false
@@ -40,8 +42,8 @@ func (r *appointmentRepository) IsNotExisted(ctx context.Context, id string) boo
 	return !r.IsExisted(ctx, id)
 }
 
-func (r *appointmentRepository) List(ctx context.Context, obj *models.AppointmentListRequest) (*[]models.AppointmentListData, error) {
-	appointment := &[]models.AppointmentListData{}
+func (r *appointmentRepository) List(ctx context.Context, obj *models2.AppointmentListRequest) (*[]models2.AppointmentListData, error) {
+	appointment := &[]models2.AppointmentListData{}
 
 	db := r.db.WithContext(ctx)
 	db = db.Model(appointment)
@@ -56,21 +58,48 @@ func (r *appointmentRepository) List(ctx context.Context, obj *models.Appointmen
 	return appointment, nil
 }
 
-func (r *appointmentRepository) Info(ctx context.Context, obj *models.AppointmentInfoRequest) (*models.AppointmentInfoData, error) {
+//func (r *appointmentRepository) Info(ctx context.Context, obj *models.AppointmentInfoRequest) (*models.AppointmentInfoData, error) {
+//
+//	appointment := &models.AppointmentInfoData{}
+//	db := r.db.WithContext(ctx)
+//
+//	err := db.
+//		Joins("JOIN user ON appointment.created_by = user.id").
+//		Select("appointment.*, user.display_name").
+//		Where("appointment.id = ?", obj.ID).
+//		Preload("Comments").
+//		First(appointment).Error
+//
+//	if err != nil {
+//		return nil, utils.DbError(err)
+//	}
+//	return appointment, nil
+//}
 
-	appointment := &models.AppointmentInfoData{}
+func (r *appointmentRepository) Info(ctx context.Context, obj *models2.AppointmentInfoRequest) (*models2.AppointmentInfoData, error) {
+
+	appointment := &models2.AppointmentInfoData{}
 	db := r.db.WithContext(ctx)
 
-	err := db.
-		Joins("JOIN users ON appointment.user_id = users.id").
-		Preload("comments").
-		Select("appointment.*, users.display_name AS display_name").
+	if err := db.Model(&domain.Appointment{}).
+		Select("appointment.*, user.display_name as created_by").
+		Joins("LEFT JOIN user ON user.id = appointment.created_by").
 		Where("appointment.id = ?", obj.ID).
-		First(appointment).Error
-
-	if err != nil {
-		return nil, utils.DbError(err)
+		First(&appointment).Error; err != nil {
+		return nil, err
 	}
+
+	comments := &[]models.Comments{}
+	if err := db.Model(&models.Comments{}).
+		Select("comments.*, user.display_name as comment_by").
+		Joins("LEFT JOIN user on user.id = comments.user_id").
+		Where("appointment_id = ?", obj.ID).
+		Find(&comments).Error; err != nil {
+		return nil, err
+	}
+
+	appointment.Comments = comments
+
 	return appointment, nil
 }
 

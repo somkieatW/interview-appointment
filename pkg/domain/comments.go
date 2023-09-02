@@ -37,8 +37,8 @@ JSON Sample
 
 */
 
-// Comment struct is a row record of the comment table in the recruitment database
-type Comment struct {
+// Comments struct is a row record of the comment table in the recruitment database
+type Comments struct {
 	//[ 0] id                                             varchar(45)          null: false  primary: true   isArray: false  auto: false  col: varchar         len: 45      default: []
 	ID string `gorm:"primary_key;column:id;type:varchar;size:45;" json:"id"`
 	//[ 1] recruitment_id                                 varchar(45)          null: false  primary: false  isArray: false  auto: false  col: varchar         len: 45      default: []
@@ -48,10 +48,10 @@ type Comment struct {
 	//[ 3] content                                        text(65535)          null: false  primary: false  isArray: false  auto: false  col: text            len: 65535   default: []
 	Content string `gorm:"column:content;type:text;size:65535;" json:"content"`
 	//[ 4] created_date                                   timestamp            null: false  primary: false  isArray: false  auto: false  col: timestamp       len: -1      default: []
-	CreatedDate time.Time `gorm:"column:created_date;type:timestamp;" json:"createdDate"`
+	CreatedAt time.Time `gorm:"column:created_at;type:timestamp;" json:"createdAt"`
 }
 
 // TableName sets the insert table name for this struct type
-func (c *Comment) TableName() string {
-	return "comment"
+func (c *Comments) TableName() string {
+	return "comments"
 }

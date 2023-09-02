@@ -10,7 +10,6 @@ import (
 	"github.com/somkieatW/interview-appointment/pkg/core/registry/core"
 	candidate "github.com/somkieatW/interview-appointment/pkg/modules/appointment/usecase"
 	comment "github.com/somkieatW/interview-appointment/pkg/modules/comment/usecase"
-	user "github.com/somkieatW/interview-appointment/pkg/modules/user/usecase"
 	"github.com/somkieatW/interview-appointment/pkg/repository"
 	"log"
 )
@@ -41,7 +40,6 @@ func Run() {
 
 	candidateUseCase := candidate.NewAppointmentUseCase(coreRegistry, repositoryRegistry)
 	commentUseCase := comment.NewCommentUseCase(coreRegistry, repositoryRegistry)
-	_ = user.NewUserUseCase(coreRegistry, repositoryRegistry)
 
 	r := fiber.New()
 	router := r.Group("")

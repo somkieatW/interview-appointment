@@ -11,7 +11,7 @@ import (
 type AppointmentRepository interface {
 	IsExisted(ctx context.Context, id string) bool
 	IsNotExisted(ctx context.Context, id string) bool
-	List(ctx context.Context, obj *models.AppointmentListRequest) (*[]domain.Appointment, error)
+	List(ctx context.Context, obj *models.AppointmentListRequest) (*[]models.AppointmentListData, error)
 	Info(ctx context.Context, obj *models.AppointmentInfoRequest) (*models.AppointmentInfoData, error)
 	Update(ctx context.Context, obj *domain.Appointment) error
 }
@@ -40,16 +40,17 @@ func (r *appointmentRepository) IsNotExisted(ctx context.Context, id string) boo
 	return !r.IsExisted(ctx, id)
 }
 
-func (r *appointmentRepository) List(ctx context.Context, obj *models.AppointmentListRequest) (*[]domain.Appointment, error) {
-	appointment := &[]domain.Appointment{}
+func (r *appointmentRepository) List(ctx context.Context, obj *models.AppointmentListRequest) (*[]models.AppointmentListData, error) {
+	appointment := &[]models.AppointmentListData{}
 
 	db := r.db.WithContext(ctx)
 	db = db.Model(appointment)
-
 	db.Limit(obj.PageSize).Offset(obj.Offset)
 
-	db = db.Preload("comments").Find(&appointment)
-	if err := db.Error; err != nil {
+	err := db.Joins("JOIN user ON appointment.created_by = user.id").
+		Select("appointment.*, user.display_name").
+		Find(&appointment).Error
+	if err != nil {
 		return nil, utils.DbError(err)
 	}
 	return appointment, nil

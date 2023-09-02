@@ -10,6 +10,11 @@ type AppointmentListRequest struct {
 }
 
 type AppointmentListResponse struct {
-	Data    *[]domain.Appointment `json:"data"`
-	Success bool                  `json:"success"`
+	Data    *[]AppointmentListData `json:"data"`
+	Success bool                   `json:"success"`
+}
+
+type AppointmentListData struct {
+	*domain.Appointment
+	DisplayName string `json:"displayName"`
 }

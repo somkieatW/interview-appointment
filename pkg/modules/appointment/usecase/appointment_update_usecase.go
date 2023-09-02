@@ -30,9 +30,9 @@ func (u *appointmentUseCase) Update(ctx context.Context, request *models.Appoint
 	}
 
 	obj := &domain.Appointment{
-		ID:          request.ID,
-		State:       request.State,
-		UpdatedDate: time.Now(),
+		ID:        request.ID,
+		State:     request.State,
+		UpdatedAt: time.Now(),
 	}
 
 	err := u.RepositoryRegistry.AppointmentRepository.Update(ctx, obj)

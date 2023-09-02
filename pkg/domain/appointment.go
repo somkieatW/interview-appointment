@@ -59,9 +59,9 @@ type Appointment struct {
 	//[ 5] created_by                                     varchar(45)          null: false  primary: false  isArray: false  auto: false  col: varchar         len: 45      default: []
 	CreatedBy string `gorm:"column:created_by;type:varchar;size:45;" json:"createdBy"`
 	//[ 6] created_date                                   timestamp            null: false  primary: false  isArray: false  auto: false  col: timestamp       len: -1      default: []
-	CreatedDate time.Time `gorm:"column:created_date;type:timestamp;" json:"createdDate"`
-	UpdatedBy   string    `gorm:"column:updated_by;type:varchar;size:45;" json:"updatedBy"`
-	UpdatedDate time.Time `gorm:"column:updated_date;type:timestamp;" json:"updatedDate"`
+	CreatedAt time.Time `gorm:"column:created_at;type:timestamp;" json:"createdAt"`
+	UpdatedBy string    `gorm:"column:updated_by;type:varchar;size:45;" json:"updatedBy"`
+	UpdatedAt time.Time `gorm:"column:updated_at;type:timestamp;" json:"updatedAt"`
 }
 
 // TableName sets the insert table name for this struct type

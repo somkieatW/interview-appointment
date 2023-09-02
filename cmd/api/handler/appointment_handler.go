@@ -27,6 +27,8 @@ func (h *AppointmentAPIHandler) Init() {
 
 	router.Get("/appointment/list", h.List)
 	router.Get("/appointment/:id", h.Info)
+	router.Patch("/appointment/", h.Update)
+	router.Put("/appointment/archive", h.Archive)
 }
 
 func (h *AppointmentAPIHandler) List(c *fiber.Ctx) error {
@@ -58,10 +60,29 @@ func (h *AppointmentAPIHandler) Info(c *fiber.Ctx) error {
 }
 
 func (h *AppointmentAPIHandler) Update(c *fiber.Ctx) error {
-	request := &models.AppointmentInfoRequest{ID: c.Params("id")}
+	request := &models.AppointmentUpdateRequest{}
+	if err := c.BodyParser(request); err != nil {
+		return err
+	}
 
 	ctx := c.UserContext()
-	data, err := h.appointmentUseCase.Info(ctx, request)
+	data, err := h.appointmentUseCase.Update(ctx, request)
+	if err != nil {
+		return err
+	}
+
+	c.Status(200).JSON(data)
+	return nil
+}
+
+func (h *AppointmentAPIHandler) Archive(c *fiber.Ctx) error {
+	request := &models.AppointmentArchiveRequest{}
+	if err := c.BodyParser(request); err != nil {
+		return err
+	}
+
+	ctx := c.UserContext()
+	data, err := h.appointmentUseCase.Archive(ctx, request)
 	if err != nil {
 		return err
 	}

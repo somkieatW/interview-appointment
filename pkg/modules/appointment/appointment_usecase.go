@@ -2,10 +2,12 @@ package appointment
 
 import (
 	"context"
-	models2 "github.com/somkieatW/interview-appointment/pkg/models"
+	"github.com/somkieatW/interview-appointment/pkg/models"
 )
 
 type AppointmentUseCase interface {
-	List(ctx context.Context, request *models2.AppointmentListRequest) (*models2.AppointmentListResponse, error)
-	Info(ctx context.Context, request *models2.AppointmentInfoRequest) (*models2.AppointmentInfoResponse, error)
+	List(ctx context.Context, request *models.AppointmentListRequest) (*models.AppointmentListResponse, error)
+	Info(ctx context.Context, request *models.AppointmentInfoRequest) (*models.AppointmentInfoResponse, error)
+	Update(ctx context.Context, request *models.AppointmentUpdateRequest) (*models.AppointmentUpdateResponse, error)
+	Archive(ctx context.Context, request *models.AppointmentArchiveRequest) (*models.AppointmentArchiveResponse, error)
 }

@@ -60,6 +60,8 @@ type Appointment struct {
 	CreatedBy string `gorm:"column:created_by;type:varchar;size:45;" json:"createdBy"`
 	//[ 6] created_date                                   timestamp            null: false  primary: false  isArray: false  auto: false  col: timestamp       len: -1      default: []
 	CreatedDate time.Time `gorm:"column:created_date;type:timestamp;" json:"createdDate"`
+	UpdatedBy   string    `gorm:"column:updated_by;type:varchar;size:45;" json:"updatedBy"`
+	UpdatedDate time.Time `gorm:"column:updated_date;type:timestamp;" json:"updatedDate"`
 }
 
 // TableName sets the insert table name for this struct type

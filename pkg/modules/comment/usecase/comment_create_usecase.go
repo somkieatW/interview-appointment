@@ -35,7 +35,7 @@ func (u *commentUseCase) Create(ctx context.Context, request *models.CommentCrea
 	}
 
 	if u.RepositoryRegistry.AppointmentRepository.IsNotExisted(ctx, request.AppointmentID) {
-		return nil, errors.New("This User is Not existed")
+		return nil, errors.New("This Appointment is not existed")
 	}
 
 	obj := &domain.Comment{

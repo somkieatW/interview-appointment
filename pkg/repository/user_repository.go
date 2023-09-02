@@ -44,7 +44,7 @@ func (r *userRepository) Info(ctx context.Context, obj *models.UserInfoRequest) 
 	db = db.First(&obj)
 
 	if err := db.Error; err != nil {
-		return nil, DbError(err)
+		return nil, utils.DbError(err)
 	}
 	return user, nil
 }

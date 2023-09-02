@@ -40,13 +40,14 @@ func Run() {
 	}
 
 	candidateUseCase := candidate.NewAppointmentUseCase(coreRegistry, repositoryRegistry)
+	commentUseCase := comment.NewCommentUseCase(coreRegistry, repositoryRegistry)
 	_ = user.NewUserUseCase(coreRegistry, repositoryRegistry)
-	_ = comment.NewCommentUseCase(coreRegistry, repositoryRegistry)
 
 	r := fiber.New()
 	router := r.Group("")
 
 	handler.NewAppointmentAPIHandler(router, coreRegistry, candidateUseCase).Init()
+	handler.NewCommentAPIHandler(router, coreRegistry, commentUseCase).Init()
 
 	r.Get("/health-check", func(c *fiber.Ctx) error {
 		return c.JSON(c.App().Stack())

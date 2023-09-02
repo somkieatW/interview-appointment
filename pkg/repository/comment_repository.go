@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"github.com/somkieatW/candidate/pkg/core/utils"
 	"github.com/somkieatW/candidate/pkg/domain"
 	"gorm.io/gorm"
 )
@@ -24,7 +25,7 @@ func (r *commentRepository) Create(ctx context.Context, obj *domain.Comment) (*d
 	db = db.Create(&obj)
 
 	if err := db.Error; err != nil {
-		return nil, DbError(err)
+		return nil, utils.DbError(err)
 	}
 	return comment, nil
 }

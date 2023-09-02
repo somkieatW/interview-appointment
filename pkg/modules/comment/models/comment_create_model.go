@@ -14,3 +14,6 @@ type CommentCreateResponse struct {
 	Data    *domain.Comment `json:"data"`
 	Success bool            `json:"success"`
 }
+
+type CommentInfoData struct {
+}

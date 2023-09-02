@@ -3,12 +3,14 @@ package usecase
 import (
 	"context"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
+	"github.com/go-ozzo/ozzo-validation/v4/is"
 	"github.com/somkieatW/candidate/pkg/modules/appointment/models"
 )
 
 func infoValidate(request *models.AppointmentInfoRequest) error {
-	err := validation.ValidateStruct(request)
-
+	err := validation.ValidateStruct(request,
+		validation.Field(&request.ID, validation.Required, is.UUID),
+	)
 	if err != nil {
 		return err
 	}

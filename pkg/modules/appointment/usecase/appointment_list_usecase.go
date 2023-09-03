@@ -3,11 +3,15 @@ package usecase
 import (
 	"context"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
+	"github.com/go-ozzo/ozzo-validation/v4/is"
 	"github.com/somkieatW/interview-appointment/pkg/models"
 )
 
 func listValidate(request *models.AppointmentListRequest) error {
-	err := validation.ValidateStruct(request)
+	err := validation.ValidateStruct(request,
+		validation.Field(&request.Offset, is.Digit, is.Digit, validation.Min(0)),
+		validation.Field(&request.PageSize, is.Digit, validation.Min(0)),
+	)
 
 	if err != nil {
 		return err

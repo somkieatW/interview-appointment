@@ -2,7 +2,9 @@ package handler
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/log"
 	"github.com/somkieatW/interview-appointment/pkg/core/registry/core"
+	"github.com/somkieatW/interview-appointment/pkg/core/utils"
 	"github.com/somkieatW/interview-appointment/pkg/models"
 	"github.com/somkieatW/interview-appointment/pkg/modules/comment"
 )
@@ -30,15 +32,25 @@ func (h *CommentAPIHandler) Init() {
 func (h *CommentAPIHandler) Create(c *fiber.Ctx) error {
 	request := &models.CommentCreateRequest{}
 	if err := c.BodyParser(request); err != nil {
-		return err
+		if err != nil {
+			response := utils.ErrorResponse{
+				Message: "Internal server error",
+			}
+			log.Error(err)
+			return c.Status(fiber.StatusInternalServerError).JSON(response)
+		}
 	}
 
 	ctx := c.UserContext()
 	data, err := h.commentUseCase.Create(ctx, request)
 	if err != nil {
-		return err
+		response := utils.ErrorResponse{
+			Message: "Internal server error",
+		}
+		log.Error(err)
+		return c.Status(fiber.StatusInternalServerError).JSON(response)
 	}
 
-	c.Status(200).JSON(data)
-	return nil
+	return c.Status(fiber.StatusOK).JSON(data)
+
 }

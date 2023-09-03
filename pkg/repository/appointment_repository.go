@@ -46,12 +46,13 @@ func (r *appointmentRepository) List(ctx context.Context, obj *models.Appointmen
 	appointment := &[]models.AppointmentListData{}
 
 	db := r.db.WithContext(ctx)
-	db = db.Model(appointment)
+	db = db.Model(&domain.Appointment{})
 	db.Limit(obj.PageSize).Offset(obj.Offset)
 
 	err := db.Joins("JOIN user ON appointment.created_by = user.id").
 		Select("appointment.*, user.display_name").
 		Where("appointment.status = ?", constants.StatusActive).
+		Order("created_at asc").
 		Find(&appointment).Error
 	if err != nil {
 		return nil, utils.DbError(err)
@@ -77,6 +78,7 @@ func (r *appointmentRepository) Info(ctx context.Context, obj *models.Appointmen
 		Select("comments.*, user.display_name as comment_by").
 		Joins("LEFT JOIN user on user.id = comments.user_id").
 		Where("appointment_id = ?", obj.ID).
+		Order("created_at desc").
 		Find(&comments).Error; err != nil {
 		return nil, err
 	}

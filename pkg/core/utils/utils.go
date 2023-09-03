@@ -5,6 +5,10 @@ import (
 	"gorm.io/gorm"
 )
 
+type ErrorResponse struct {
+	Message string `json:"message"`
+}
+
 // IsEmpty ..
 func IsEmpty(value string) bool {
 	return value == ""

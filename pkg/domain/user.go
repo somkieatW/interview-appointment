@@ -27,12 +27,13 @@ CREATE TABLE `user` (
   `status` varchar(1) NOT NULL,
   `created_by` varchar(45) NOT NULL,
   `created_date` timestamp NOT NULL,
+  `email` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
 JSON Sample
 -------------------------------------
-{    "id": "CoptVBNPRgyLhbHQnJljoiDIQ",    "displayName": "aGTXLgKOgPfhMiTHoTbyNYINF",    "profileImageUrl": "kfIdZAWndhCTRYNtbLtbkJUYC",    "status": "YyhlWnpfyUsOhkuTuSgqtHswo",    "createdBy": "BZOygxJptWeRuVGfUeegVVSVU",    "createdDate": "2071-07-31T01:45:54.891419208+07:00"}
+{    "id": "tcEZRWoduPKajTIvLRbPBexgZ",    "displayName": "bnmlAgbTARgEKNeXMxqWtiPlW",    "profileImageUrl": "TAbIlfjcDPojPMNbnmdnvNJeS",    "status": "gHoCcTOQHwfqnTTnicncMnsfs",    "createdBy": "aYKMpFbXQvDCJtXpDFcvKDMOE",    "createdDate": "2194-01-21T19:00:10.981226411+07:00",    "email": "qcwPNaBcfBwKRdWONZJFlElWe"}
 
 
 
@@ -52,6 +53,8 @@ type User struct {
 	CreatedBy string `gorm:"column:created_by;type:varchar;size:45;" json:"createdBy"`
 	//[ 5] created_date                                   timestamp            null: false  primary: false  isArray: false  auto: false  col: timestamp       len: -1      default: []
 	CreatedDate time.Time `gorm:"column:created_date;type:timestamp;" json:"createdDate"`
+	//[ 6] email                                          varchar(200)         null: false  primary: false  isArray: false  auto: false  col: varchar         len: 200     default: []
+	Email string `gorm:"column:email;type:varchar;size:200;" json:"email"`
 }
 
 // TableName sets the insert table name for this struct type
